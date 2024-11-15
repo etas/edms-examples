@@ -1,0 +1,42 @@
+yaaa_version: 0.5
+
+imports:
+  - HelloWorld.activity_graph
+
+deployment_targets:
+  - name: roudi
+    type: carma_0_22
+    mempool_config:
+      - chunk_size: 32
+        chunk_count: 67
+      - chunk_size: 608
+        chunk_count: 3
+      - chunk_size: 800
+        chunk_count: 3
+      - chunk_size: 102432
+        chunk_count: 66
+      - chunk_size: 1048608
+        chunk_count: 6
+      - chunk_size: 2118688
+        chunk_count: 6
+
+deployed_instances:
+  - activity_instance: consumer
+    deploy_to: roudi
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: producer
+    deploy_to: roudi
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+
+measurement_config:
+  - name: raw_gateway
+    deploy_to: roudi
+    stimulus:
+      kind: cyclic
+      cycle_ms: 200
+    cache_config:
+      default_cache_size: 2

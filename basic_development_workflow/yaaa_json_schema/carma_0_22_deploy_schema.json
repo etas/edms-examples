@@ -1,0 +1,290 @@
+{
+    "title": "DeployFile",
+    "description": "Object Model for the Deploy File.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "hardware_instances": {
+            "title": "Hardware Instances",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/HardwareInstance"
+            }
+        },
+        "roudis": {
+            "title": "Roudis",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Roudis"
+            }
+        },
+        "activity_deployment": {
+            "title": "Activity Deployment",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ActivityDeployment"
+            }
+        },
+        "gateway_deployment": {
+            "title": "Gateway Deployment",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/GatewayDeployment"
+            }
+        },
+        "mempool_config": {
+            "title": "Mempool Config",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/MempoolConfigForDeploy"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "HardwareInstance": {
+            "title": "HardwareInstance",
+            "description": " Object Template for the model Hardware instance.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "MempoolConfig": {
+            "title": "MempoolConfig",
+            "description": "File Model Pydantic data model representation of Memory Pool Configuration, setting chunk size and the number of chunks.",
+            "type": "object",
+            "properties": {
+                "chunk_size": {
+                    "title": "Chunk Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "chunk_count": {
+                    "title": "Chunk Count",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "chunk_size",
+                "chunk_count"
+            ],
+            "additionalProperties": false
+        },
+        "Roudis": {
+            "title": "Roudis",
+            "description": "Object Template for Roudi.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "partition": {
+                    "title": "Partition",
+                    "type": "string"
+                },
+                "mempool_config": {
+                    "title": "Mempool Config",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MempoolConfig"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "partition",
+                "mempool_config"
+            ],
+            "additionalProperties": false
+        },
+        "ActivityDeployment": {
+            "title": "ActivityDeployment",
+            "description": "Object Template for the Activity Deployment\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "activity_instance": {
+                    "title": "Activity Instance",
+                    "type": "string"
+                },
+                "deploy_to": {
+                    "title": "Deploy To",
+                    "type": "string"
+                },
+                "thread_pool_size": {
+                    "title": "Thread Pool Size",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "activity_instance",
+                "deploy_to",
+                "thread_pool_size",
+                "importance",
+                "core_affinity"
+            ],
+            "additionalProperties": false
+        },
+        "GatewayDeployment": {
+            "title": "GatewayDeployment",
+            "description": "Object Template for the Memory Chunks.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "gateway_instance": {
+                    "title": "Gateway Instance",
+                    "type": "string"
+                },
+                "deploy_to": {
+                    "title": "Deploy To",
+                    "type": "string"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "gateway_instance",
+                "deploy_to",
+                "core_affinity",
+                "importance"
+            ],
+            "additionalProperties": false
+        },
+        "Chunks": {
+            "title": "Chunks",
+            "description": "Object Template for the In Gateway Deployment.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "chunk_size": {
+                    "title": "Chunk Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "chunk_count": {
+                    "title": "Chunk Count",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "chunk_size",
+                "chunk_count"
+            ],
+            "additionalProperties": false
+        },
+        "MempoolConfigForDeploy": {
+            "title": "MempoolConfigForDeploy",
+            "description": "Object Template for the OutGateway Deployment\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "partition": {
+                    "title": "Partition",
+                    "type": "string"
+                },
+                "chunks": {
+                    "title": "Chunks",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Chunks"
+                    }
+                }
+            },
+            "required": [
+                "partition",
+                "chunks"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

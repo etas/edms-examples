@@ -1,0 +1,59 @@
+{
+    "title": "TransportProtocolFile",
+    "description": "Pydantic class to parse transport_protocol.yaml files.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "configuration_parameters": {
+            "title": "Configuration Parameters",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ConnectionConfigParameter"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "configuration_parameters"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "ConnectionConfigParameter": {
+            "title": "ConnectionConfigParameter",
+            "description": "Class to parse a connection config parameter contained in a transport_protocol.yaml file.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+                    "type": "string"
+                },
+                "default_value": {
+                    "title": "Default Value",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

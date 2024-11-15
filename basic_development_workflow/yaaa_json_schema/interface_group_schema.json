@@ -1,0 +1,60 @@
+{
+    "title": "InterfaceGroupFile",
+    "description": "File containing details of an Interface Group",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "interface_group": {
+            "title": "Interface Group",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/InterfaceInstance"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "interface_group"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "InterfaceInstance": {
+            "title": "InterfaceInstance",
+            "description": "Interface Instance Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

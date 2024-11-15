@@ -1,0 +1,260 @@
+{
+    "title": "GatewayFile",
+    "description": "Gateway File Model\n\n:param YaaaType: File containing information about the Gateway.\n:type YaaaType: FileObject.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "stimulus": {
+            "title": "Stimulus",
+            "oneOf": [
+                {
+                    "title": "PeriodicStimulus",
+                    "description": "Object Template for PeriodicStimulus defining the cyclic time it repeats and any delay offset.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+                    "type": "object",
+                    "properties": {
+                        "kind": {
+                            "const": "cyclic"
+                        },
+                        "cycle_ms": {
+                            "title": "Cycle Ms",
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "offset_ms": {
+                            "title": "Offset Ms",
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "cycle_ms",
+                        "offset_ms"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "title": "DataStimulus",
+                    "description": "Object Template for DataStimulus containing the trigger and timeout.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+                    "type": "object",
+                    "properties": {
+                        "kind": {
+                            "const": "data"
+                        },
+                        "trigger": {
+                            "title": "Trigger",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "timeout_ms": {
+                            "title": "Timeout Ms",
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "trigger",
+                        "timeout_ms"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "input_ports": {
+            "title": "Input Ports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/GatewayInputPort"
+            }
+        },
+        "output_ports": {
+            "title": "Output Ports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/GatewayOutputPort"
+            }
+        },
+        "business_logic": {
+            "$ref": "#/definitions/BusinessLogic"
+        }
+    },
+    "required": [
+        "yaaa_version"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "InputPortPolicy": {
+            "title": "InputPortPolicy",
+            "description": "The policy regarding the InputPorts\n\n    :param str: Input policy Port string\n    :type str: string\n    :param enum: A list o possible options.\n    :type enum: Enum\n    ",
+            "enum": [
+                "new",
+                "last"
+            ],
+            "type": "string"
+        },
+        "MetaTypes": {
+            "title": "MetaTypes",
+            "description": "\n    Object Template for MetaTypes, currently either Carma or Dmc.\n\n    :param enum: _description_\n    :type enum: Enum\n    ",
+            "enum": [
+                "Carma",
+                "Dmc"
+            ]
+        },
+        "GatewayInputPort": {
+            "title": "GatewayInputPort",
+            "description": "Gateway Input Port Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "policy": {
+                    "$ref": "#/definitions/InputPortPolicy"
+                },
+                "cache_size": {
+                    "title": "Cache Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "optional": {
+                    "title": "Optional",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "available_on_init": {
+                    "title": "Available On Init",
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "allocator": {
+                    "title": "Allocator",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "meta_type": {
+                    "default": "Carma",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/MetaTypes"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "policy",
+                "cache_size"
+            ],
+            "additionalProperties": false
+        },
+        "GatewayOutputPort": {
+            "title": "GatewayOutputPort",
+            "description": "Gateway OutputPort Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "meta_type": {
+                    "default": "Carma",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/MetaTypes"
+                        }
+                    ]
+                },
+                "latched": {
+                    "title": "Latched",
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "max_allowed_allocations": {
+                    "title": "Max Allowed Allocations",
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "BusinessLogic": {
+            "title": "BusinessLogic",
+            "description": "Business Logic Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "cpp_type": {
+                    "title": "Cpp Type",
+                    "pattern": "[:\\w]+",
+                    "type": "string"
+                },
+                "cpp_include": {
+                    "title": "Cpp Include",
+                    "pattern": "[-.\\w]+",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cpp_type",
+                "cpp_include"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

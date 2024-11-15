@@ -1,0 +1,360 @@
+{
+    "title": "EeSystemFile",
+    "description": "File containing details of the Ee System",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "system_components": {
+            "title": "System Components",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SystemComponent"
+            }
+        },
+        "communication_networks": {
+            "title": "Communication Networks",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/CommunicationNetwork"
+            }
+        },
+        "power_supply_networks": {
+            "title": "Power Supply Networks",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/PowerSupplyNetwork"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "system_components",
+        "communication_networks",
+        "power_supply_networks"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Node": {
+            "title": "Node",
+            "description": "Node Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "ecu_id": {
+                    "title": "Ecu Id",
+                    "type": "integer"
+                },
+                "ips": {
+                    "title": "Ips",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "vlan_ids": {
+                    "title": "Vlan Ids",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "required": [
+                "label",
+                "ecu_id",
+                "ips",
+                "vlan_ids"
+            ],
+            "additionalProperties": false
+        },
+        "Ecu": {
+            "title": "Ecu",
+            "description": "Ecu Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "nodes": {
+                    "title": "Nodes",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Node"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "nodes"
+            ],
+            "additionalProperties": false
+        },
+        "EESystemInstance": {
+            "title": "EESystemInstance",
+            "description": "EESystems Instance Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "SystemComponent": {
+            "title": "SystemComponent",
+            "description": "Systems Component Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "ecus": {
+                    "title": "Ecus",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Ecu"
+                    }
+                },
+                "switches": {
+                    "title": "Switches",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Ecu"
+                    }
+                },
+                "ee_systems": {
+                    "title": "Ee Systems",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EESystemInstance"
+                    }
+                }
+            },
+            "required": [
+                "label",
+                "ecus",
+                "switches"
+            ],
+            "additionalProperties": false
+        },
+        "NetworkConnection": {
+            "title": "NetworkConnection",
+            "description": "Network Connection\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "protocol": {
+                    "title": "Protocol",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$"
+                    }
+                },
+                "data_rate_bps": {
+                    "title": "Data Rate Bps",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from",
+                "to",
+                "type",
+                "protocol",
+                "data_rate_bps"
+            ],
+            "additionalProperties": false
+        },
+        "BusSystem": {
+            "title": "BusSystem",
+            "description": "Bus Systems\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "data_rate_bps": {
+                    "title": "Data Rate Bps",
+                    "type": "integer"
+                },
+                "connections": {
+                    "title": "Connections",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "data_rate_bps",
+                "connections"
+            ],
+            "additionalProperties": false
+        },
+        "CommunicationNetwork": {
+            "title": "CommunicationNetwork",
+            "description": "Communication Network\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "network_connections": {
+                    "title": "Network Connections",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/NetworkConnection"
+                    }
+                },
+                "bus_systems": {
+                    "title": "Bus Systems",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BusSystem"
+                    }
+                }
+            },
+            "required": [
+                "label",
+                "network_connections",
+                "bus_systems"
+            ],
+            "additionalProperties": false
+        },
+        "PowerConnection": {
+            "title": "PowerConnection",
+            "description": "Power Connection Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "peak_current_A": {
+                    "title": "Peak Current A",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "cont_current_A": {
+                    "title": "Cont Current A",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from",
+                "to",
+                "peak_current_A",
+                "cont_current_A"
+            ],
+            "additionalProperties": false
+        },
+        "PowerSupplyNetwork": {
+            "title": "PowerSupplyNetwork",
+            "description": "Power Supply Network Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "ground_port": {
+                    "title": "Ground Port",
+                    "type": "string"
+                },
+                "power_ports": {
+                    "title": "Power Ports",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "power_connections": {
+                    "title": "Power Connections",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PowerConnection"
+                    }
+                }
+            },
+            "required": [
+                "label",
+                "ground_port",
+                "power_ports",
+                "power_connections"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

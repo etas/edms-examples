@@ -1,0 +1,49 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to an Activity",
+            "type": "cppdbg",
+            "request": "attach",
+            "processId": "{processId of app_under_test",
+            "program": "${workspaceFolder}/build/bin/{app_under_test}",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+            ]
+        },       
+        {
+            "name": "Start Recall Player",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/recompute_recall_player",
+            "args": [
+                "--system-library-path",
+                "${workspaceFolder}/build/lib/libDeployment_deploy_roudi_recall_system.so",
+                "-l",
+                "2"
+            ],
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/build/lib:${env:LD_LIBRARY_PATH}"
+                },
+            ],
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }            
+    ],   
+}

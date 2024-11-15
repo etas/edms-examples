@@ -1,0 +1,24 @@
+{
+    "yaml.schemas": {
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/activity_schema.json": "*.activity.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/activity_graph_schema.json": "*.activity_graph.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/deploy_schema.json": "*.deploy.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/carma_0_22_deploy_schema.json": "*.carma_0_22_deploy.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/noviroc_deploy_schema.json": "*.noviroc_deploy.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/ecu_schema.json": "*.ecu.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/ee_interfaces_schema.json": "*.ee_interfaces.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/ee_system_schema.json": "*.ee_system.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/gateway_schema.json": "*.gateway.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/hypervisor_schema.json": "*.hypervisor.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/interface_group_schema.json": "*.interface_group.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/interfaces_schema.json": "*.interfaces.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/linux_schema.json": "*.linux.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/parameter_instance_schema.json": "*.parameter_instance.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/parameter_interface_schema.json": "*.parameter_interface.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/qnx_schema.json": "*.qnx.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/runnable_schema.json": "*.runnable.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/soc_schema.json": "*.soc.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/switch_schema.json": "*.switch.yaml",
+        "/home/wad9fe/aos/edms-getting-started-tutorials/hello_world/yaaa_json_schema/transport_protocol_schema.json": "*.transport_protocol.yaml"
+    }
+}

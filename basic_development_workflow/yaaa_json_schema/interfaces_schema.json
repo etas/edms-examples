@@ -1,0 +1,88 @@
+{
+    "title": "InterfacesFile",
+    "description": "File containing the details of the interfaces",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "interfaces": {
+            "title": "Interfaces",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Interface"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "interfaces"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Interface": {
+            "title": "Interface",
+            "description": "Interace Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "type_name": {
+                    "title": "Type Name",
+                    "maxLength": 100,
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "cpp_type": {
+                    "title": "Cpp Type",
+                    "type": "string"
+                },
+                "cpp_include": {
+                    "title": "Cpp Include",
+                    "type": "string"
+                },
+                "tags": {
+                    "title": "Tags",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "i_am_okay_with_breaking_the_recompute_for_the_whole_project": {
+                    "title": "I Am Okay With Breaking The Recompute For The Whole Project",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "metadata_cpp_type": {
+                    "title": "Metadata Cpp Type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type_name",
+                "cpp_type",
+                "cpp_include"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

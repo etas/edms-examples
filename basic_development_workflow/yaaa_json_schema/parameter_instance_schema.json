@@ -1,0 +1,75 @@
+{
+    "title": "ParameterInstanceFile",
+    "description": "File providing the Parameter Interface representation.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "values": {
+            "title": "Values",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ParameterInstanceValue"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "values"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "ParameterInstanceValue": {
+            "title": "ParameterInstanceValue",
+            "description": "Convenience class to represent a value of a parameter instance",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "value": {
+                    "title": "Value",
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "value"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

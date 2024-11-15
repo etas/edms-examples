@@ -1,0 +1,530 @@
+{
+    "title": "MultiTargetDeploymentFile",
+    "description": "File Model Pydantic data model representation for a multi-target-deployment '_.deploy.yaml' file.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "deployment_targets": {
+            "title": "Deployment Targets",
+            "default": [],
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/DeploymentTargetCarma"
+                    },
+                    {
+                        "$ref": "#/definitions/DeploymentTargetNoviroc"
+                    }
+                ]
+            }
+        },
+        "deployed_instances": {
+            "title": "Deployed Instances",
+            "default": [],
+            "minItems": 1,
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/MTDGatewayDeployment"
+                    },
+                    {
+                        "$ref": "#/definitions/MTDActivityDeployment"
+                    }
+                ]
+            }
+        },
+        "connection_config": {
+            "title": "Connection Config",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ConnectionConfigEntry"
+            }
+        },
+        "measurement_config": {
+            "title": "Measurement Config",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/MeasurementConfig"
+            }
+        },
+        "security_policies": {
+            "title": "Security Policies",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SecurityPolicy"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "UIDRange": {
+            "title": "UIDRange",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "to": {
+                    "title": "To",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "OsConfig": {
+            "title": "OsConfig",
+            "type": "object",
+            "properties": {
+                "uid_range": {
+                    "$ref": "#/definitions/UIDRange"
+                },
+                "typed_memory_section": {
+                    "title": "Typed Memory Section",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "uid_range"
+            ],
+            "additionalProperties": false
+        },
+        "MempoolConfig": {
+            "title": "MempoolConfig",
+            "description": "File Model Pydantic data model representation of Memory Pool Configuration, setting chunk size and the number of chunks.",
+            "type": "object",
+            "properties": {
+                "chunk_size": {
+                    "title": "Chunk Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "chunk_count": {
+                    "title": "Chunk Count",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "chunk_size",
+                "chunk_count"
+            ],
+            "additionalProperties": false
+        },
+        "DeploymentTargetCarma": {
+            "title": "DeploymentTargetCarma",
+            "description": "File Model Pydantic data model representation of a deployment target for Carma.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "enum": [
+                        "carma_0_22"
+                    ],
+                    "type": "string"
+                },
+                "os_type": {
+                    "title": "Os Type",
+                    "enum": [
+                        "QNX",
+                        "LINUX"
+                    ],
+                    "type": "string"
+                },
+                "os_config": {
+                    "$ref": "#/definitions/OsConfig"
+                },
+                "mempool_config": {
+                    "title": "Mempool Config",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MempoolConfig"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "type",
+                "mempool_config"
+            ],
+            "additionalProperties": false
+        },
+        "DeploymentTargetNoviroc": {
+            "title": "DeploymentTargetNoviroc",
+            "description": "File Model Pydantic data model representation of a deployment target for Noviroc.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "enum": [
+                        "noviroc"
+                    ],
+                    "type": "string"
+                },
+                "os_type": {
+                    "title": "Os Type",
+                    "enum": [
+                        "QNX",
+                        "LINUX"
+                    ],
+                    "type": "string"
+                },
+                "os_config": {
+                    "$ref": "#/definitions/OsConfig"
+                },
+                "port_separation": {
+                    "title": "Port Separation",
+                    "default": false,
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "MTDGatewayDeployment": {
+            "title": "MTDGatewayDeployment",
+            "description": "File Model Pydantic data model representation for a deployed gateway instance.",
+            "type": "object",
+            "properties": {
+                "deploy_to": {
+                    "title": "Deploy To",
+                    "type": "string"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "default": [
+                        0
+                    ],
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                },
+                "gateway_instance": {
+                    "title": "Gateway Instance",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "deploy_to",
+                "importance",
+                "gateway_instance"
+            ],
+            "additionalProperties": false
+        },
+        "MTDActivityDeployment": {
+            "title": "MTDActivityDeployment",
+            "description": "File Model Pydantic data model representation for a deployed activity instance.",
+            "type": "object",
+            "properties": {
+                "deploy_to": {
+                    "title": "Deploy To",
+                    "type": "string"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "default": [
+                        0
+                    ],
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                },
+                "thread_pool_size": {
+                    "title": "Thread Pool Size",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "activity_instance": {
+                    "title": "Activity Instance",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "deploy_to",
+                "importance",
+                "activity_instance"
+            ],
+            "additionalProperties": false
+        },
+        "ConnectionConfigEntry": {
+            "title": "ConnectionConfigEntry",
+            "description": "Representation of an entry inside a deployment file's 'ConnectionConfig' attribute.\nParams is an optional dict, which means it does not have to be provided. If one is provided,\nit must be a dict and all values must be given as a data type that can be interpreted as a string.",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "string"
+                },
+                "via": {
+                    "title": "Via",
+                    "type": "string"
+                },
+                "params": {
+                    "title": "Params",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "from",
+                "to",
+                "via"
+            ],
+            "additionalProperties": false
+        },
+        "MTAStimulus": {
+            "title": "MTAStimulus",
+            "description": "File Model Pydantic data model representation of Stimulus which provides the kind and the cycle time it repeats.",
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "title": "Kind",
+                    "enum": [
+                        "cyclic"
+                    ],
+                    "type": "string"
+                },
+                "cycle_ms": {
+                    "title": "Cycle Ms",
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "kind",
+                "cycle_ms"
+            ],
+            "additionalProperties": false
+        },
+        "MTATopics": {
+            "title": "MTATopics",
+            "description": "File Model Pydantic data model representation of topics which provides list of ports to be measured by the configuration and list of ports that should be excluded while measuring.",
+            "type": "object",
+            "properties": {
+                "includes": {
+                    "title": "Includes",
+                    "default": [],
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "excludes": {
+                    "title": "Excludes",
+                    "default": [],
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "MTACustomCacheSizes": {
+            "title": "MTACustomCacheSizes",
+            "description": "File Model Pydantic data model representation of cache sizes to provide custom cache size for individual ports.",
+            "type": "object",
+            "properties": {
+                "topic": {
+                    "title": "Topic",
+                    "type": "string"
+                },
+                "cache_size": {
+                    "title": "Cache Size",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "topic",
+                "cache_size"
+            ],
+            "additionalProperties": false
+        },
+        "MTACacheConfig": {
+            "title": "MTACacheConfig",
+            "description": "File Model Pydantic data model representation of Cache Config to provide default cache size as well as any custom cache size for individual ports.",
+            "type": "object",
+            "properties": {
+                "default_cache_size": {
+                    "title": "Default Cache Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "custom_cache_sizes": {
+                    "title": "Custom Cache Sizes",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MTACustomCacheSizes"
+                    }
+                }
+            },
+            "required": [
+                "default_cache_size"
+            ],
+            "additionalProperties": false
+        },
+        "MeasurementConfig": {
+            "title": "MeasurementConfig",
+            "description": "File Model Pydantic data model representation of measurement configuration to create MTA instances.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "deploy_to": {
+                    "title": "Deploy To",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "stimulus": {
+                    "$ref": "#/definitions/MTAStimulus"
+                },
+                "topics": {
+                    "$ref": "#/definitions/MTATopics"
+                },
+                "cache_config": {
+                    "$ref": "#/definitions/MTACacheConfig"
+                }
+            },
+            "required": [
+                "name",
+                "deploy_to",
+                "stimulus",
+                "cache_config"
+            ],
+            "additionalProperties": false
+        },
+        "SecurityPolicy": {
+            "title": "SecurityPolicy",
+            "description": "Pydantic model of a security policy profile.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "privileged_io": {
+                    "title": "Privileged Io",
+                    "type": "boolean"
+                },
+                "raw_socket": {
+                    "title": "Raw Socket",
+                    "type": "boolean"
+                },
+                "priv_port": {
+                    "title": "Priv Port",
+                    "type": "boolean"
+                },
+                "deployed_instances": {
+                    "title": "Deployed Instances",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "privileged_io",
+                "raw_socket",
+                "priv_port"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

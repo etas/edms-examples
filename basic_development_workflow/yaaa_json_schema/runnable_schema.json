@@ -1,0 +1,197 @@
+{
+    "title": "RunnableFile",
+    "description": "A file containing details of the runnables.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "input_ports": {
+            "title": "Input Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/RunnableInputPort"
+            }
+        },
+        "output_ports": {
+            "title": "Output Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/RunnableOutputPort"
+            }
+        },
+        "internal_state": {
+            "$ref": "#/definitions/InternalState"
+        },
+        "parameters": {
+            "title": "Parameters",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/RunnableParameter"
+            }
+        },
+        "scratchpad": {
+            "$ref": "#/definitions/Scratchpad"
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "input_ports",
+        "output_ports"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "InputPortPolicy": {
+            "title": "InputPortPolicy",
+            "description": "The policy regarding the InputPorts\n\n    :param str: Input policy Port string\n    :type str: string\n    :param enum: A list o possible options.\n    :type enum: Enum\n    ",
+            "enum": [
+                "new",
+                "last"
+            ],
+            "type": "string"
+        },
+        "RunnableInputPort": {
+            "title": "RunnableInputPort",
+            "description": "Input Port Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "policy": {
+                    "$ref": "#/definitions/InputPortPolicy"
+                },
+                "cache_size": {
+                    "title": "Cache Size",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "optional": {
+                    "title": "Optional",
+                    "default": false,
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "policy",
+                "cache_size"
+            ],
+            "additionalProperties": false
+        },
+        "RunnableOutputPort": {
+            "title": "RunnableOutputPort",
+            "description": "Output Port Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "InternalState": {
+            "title": "InternalState",
+            "description": "Internal State Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "cpp_type": {
+                    "title": "Cpp Type",
+                    "type": "string"
+                },
+                "cpp_include": {
+                    "title": "Cpp Include",
+                    "type": "string"
+                },
+                "i_am_okay_with_breaking_the_recompute_for_the_whole_project": {
+                    "title": "I Am Okay With Breaking The Recompute For The Whole Project",
+                    "default": false,
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "cpp_type",
+                "cpp_include"
+            ],
+            "additionalProperties": false
+        },
+        "RunnableParameter": {
+            "title": "RunnableParameter",
+            "description": "Convenience type to represent a parameter entry.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "Scratchpad": {
+            "title": "Scratchpad",
+            "description": "Object Template for Scratchpad based on the BaseModel.",
+            "type": "object",
+            "properties": {
+                "cpp_type": {
+                    "title": "Cpp Type",
+                    "type": "string"
+                },
+                "cpp_include": {
+                    "title": "Cpp Include",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cpp_type",
+                "cpp_include"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

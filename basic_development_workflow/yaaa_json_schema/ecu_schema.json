@@ -1,0 +1,309 @@
+{
+    "title": "EcuFile",
+    "description": "The YaaaType containing info about the ECU.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "socs": {
+            "title": "Socs",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Soc"
+            }
+        },
+        "switches": {
+            "title": "Switches",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Switch"
+            }
+        },
+        "ports": {
+            "title": "Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Port"
+            }
+        },
+        "power": {
+            "$ref": "#/definitions/Power"
+        },
+        "voltage": {
+            "title": "Voltage",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Voltage"
+            }
+        },
+        "current": {
+            "$ref": "#/definitions/Current"
+        },
+        "connections": {
+            "title": "Connections",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/EcuConnection"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "socs",
+        "switches",
+        "ports",
+        "power",
+        "voltage",
+        "current",
+        "connections"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Soc": {
+            "title": "Soc",
+            "description": "Object Model for Soc\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "Switch": {
+            "title": "Switch",
+            "description": "Object Model for Switch\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "Port": {
+            "title": "Port",
+            "description": "Convenience type for a Port",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "config": {
+                    "title": "Config",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "config"
+            ],
+            "additionalProperties": false
+        },
+        "Power": {
+            "title": "Power",
+            "description": "Convenience type for Power",
+            "type": "object",
+            "properties": {
+                "p_max_W": {
+                    "title": "P Max W",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "p_mean_W": {
+                    "title": "P Mean W",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "p_max_W",
+                "p_mean_W"
+            ],
+            "additionalProperties": false
+        },
+        "Voltage": {
+            "title": "Voltage",
+            "description": "Convenience type for Voltage",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string"
+                },
+                "v_min_V": {
+                    "title": "V Min V",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "v_max_V": {
+                    "title": "V Max V",
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "label",
+                "description",
+                "v_min_V",
+                "v_max_V"
+            ],
+            "additionalProperties": false
+        },
+        "Current": {
+            "title": "Current",
+            "description": "Convenience type for Current",
+            "type": "object",
+            "properties": {
+                "i_max_mA": {
+                    "title": "I Max Ma",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "i_quiescent_mA": {
+                    "title": "I Quiescent Ma",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "i_inrush_A": {
+                    "title": "I Inrush A",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "i_max_mA",
+                "i_quiescent_mA",
+                "i_inrush_A"
+            ],
+            "additionalProperties": false
+        },
+        "PortBinding": {
+            "title": "PortBinding",
+            "description": "Object Model for Port Binding\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "InternalConnection": {
+            "title": "InternalConnection",
+            "description": "Object Model for Internal Connection\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "data_rate_bps": {
+                    "title": "Data Rate Bps",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from",
+                "to",
+                "type",
+                "data_rate_bps"
+            ],
+            "additionalProperties": false
+        },
+        "EcuConnection": {
+            "title": "EcuConnection",
+            "description": "Object Model for ECU Connection\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "port_bindings": {
+                    "title": "Port Bindings",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PortBinding"
+                    }
+                },
+                "internal_connections": {
+                    "title": "Internal Connections",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InternalConnection"
+                    }
+                }
+            },
+            "required": [
+                "port_bindings",
+                "internal_connections"
+            ],
+            "additionalProperties": false
+        }
+    }
+}
