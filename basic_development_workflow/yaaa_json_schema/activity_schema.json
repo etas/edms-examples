@@ -1,0 +1,484 @@
+{
+    "title": "ActivityFile",
+    "description": "Object Template for ActivityFile based on the YaaaType.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "stimulus": {
+            "title": "Stimulus",
+            "oneOf": [
+                {
+                    "title": "PeriodicStimulus",
+                    "description": "Object Template for PeriodicStimulus defining the cyclic time it repeats and any delay offset.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+                    "type": "object",
+                    "properties": {
+                        "kind": {
+                            "const": "cyclic"
+                        },
+                        "cycle_ms": {
+                            "title": "Cycle Ms",
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "offset_ms": {
+                            "title": "Offset Ms",
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "cycle_ms",
+                        "offset_ms"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "title": "DataStimulus",
+                    "description": "Object Template for DataStimulus containing the trigger and timeout.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+                    "type": "object",
+                    "properties": {
+                        "kind": {
+                            "const": "data"
+                        },
+                        "trigger": {
+                            "title": "Trigger",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "timeout_ms": {
+                            "title": "Timeout Ms",
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "trigger",
+                        "timeout_ms"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "input_ports": {
+            "title": "Input Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ActivityInputPort"
+            }
+        },
+        "output_ports": {
+            "title": "Output Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ActivityOutputPort"
+            }
+        },
+        "parameters": {
+            "title": "Parameters",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ActivityParameter"
+            }
+        },
+        "input_filter": {
+            "title": "Input Filter",
+            "default": false,
+            "type": "boolean"
+        },
+        "runnable_instances": {
+            "title": "Runnable Instances",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/RunnableInstance"
+            }
+        },
+        "connections": {
+            "$ref": "#/definitions/Connections"
+        },
+        "tags": {
+            "title": "Tags",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "stimulus",
+        "input_ports",
+        "output_ports",
+        "runnable_instances",
+        "connections"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "MetaTypes": {
+            "title": "MetaTypes",
+            "description": "\n    Object Template for MetaTypes, currently either Carma or Dmc.\n\n    :param enum: _description_\n    :type enum: Enum\n    ",
+            "enum": [
+                "Carma",
+                "Dmc"
+            ]
+        },
+        "ActivityInputPort": {
+            "title": "ActivityInputPort",
+            "description": "Object Template for ActivityInputPort based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "meta_type": {
+                    "default": "Carma",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/MetaTypes"
+                        }
+                    ]
+                },
+                "optional": {
+                    "title": "Optional",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "available_on_init": {
+                    "title": "Available On Init",
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "tags": {
+                    "title": "Tags",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "ActivityOutputPort": {
+            "title": "ActivityOutputPort",
+            "description": "Object Template for ActivityOutputPort based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "latched": {
+                    "title": "Latched",
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "tags": {
+                    "title": "Tags",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "meta_type": {
+                    "default": "Carma",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/MetaTypes"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "ActivityParameter": {
+            "title": "ActivityParameter",
+            "description": "Convenience type to represent a parameter entry.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "RunnableInstance": {
+            "title": "RunnableInstance",
+            "description": "Object Template for RunnableInstance based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "InputBinding": {
+            "title": "InputBinding",
+            "description": "Object Template for InputBinding based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "ParameterConnection": {
+            "title": "ParameterConnection",
+            "description": "Object Template for ParameterConnection based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "RunnableConnection": {
+            "title": "RunnableConnection",
+            "description": "Object Template for RunnableConnection based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "OutputBinding": {
+            "title": "OutputBinding",
+            "description": "Object Template for OutputBinding based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "maxItems": 1
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "Connections": {
+            "title": "Connections",
+            "description": "Object Template for Connections based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "inputs": {
+                    "title": "Inputs",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InputBinding"
+                    }
+                },
+                "parameters": {
+                    "title": "Parameters",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ParameterConnection"
+                    }
+                },
+                "graph": {
+                    "title": "Graph",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RunnableConnection"
+                    }
+                },
+                "outputs": {
+                    "title": "Outputs",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OutputBinding"
+                    }
+                }
+            },
+            "required": [
+                "inputs",
+                "graph",
+                "outputs"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

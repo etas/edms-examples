@@ -1,0 +1,7 @@
+/build/
+/install/
+/robolyzer_workspace/
+/mem_report/
+.envrc
+*.bs
+*.bag

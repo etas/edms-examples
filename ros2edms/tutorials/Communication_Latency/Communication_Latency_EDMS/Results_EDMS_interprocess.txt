@@ -1,0 +1,7 @@
+Interprcocess-Communication:
+[      59.438241] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.28 ms
+[     119.436572] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.37 ms
+[     179.437774] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.26 ms
+[     239.436128] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.30 ms
+[     299.436029] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.36 ms
+[     359.436250] |   INFO|       Consumer|             consumer.cpp@39   |       consumer::consumer       | Average latency over last 60 samples: 1.35 ms

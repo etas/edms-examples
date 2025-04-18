@@ -1,0 +1,9 @@
+yaaa_version: 0.5
+
+imports:
+  - Intraprocess.activity
+
+activity_instances:
+  - name: intraprocess
+    type: Intraprocess
+    connections: []

@@ -1,0 +1,7 @@
+Intraprcocess-Communication:
+[      59.859847] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.73 ms
+[     119.861074] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.71 ms
+[     179.859669] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.70 ms
+[     239.858897] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.64 ms
+[     299.858871] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.67 ms
+[     359.859025] |   INFO|       Consumer|             consumer.cpp@39   |   intraprocess::consumer       | Average latency over last 60 samples: 0.68 ms

@@ -1,0 +1,15 @@
+yaaa_version: 0.5
+
+imports:
+  - Consumer.activity
+  - Producer.activity
+
+activity_instances:
+  - name: producer
+    type: Producer
+    connections: []
+  - name: consumer
+    type: Consumer
+    connections:
+      - from: producer.output
+        to: input

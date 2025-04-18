@@ -1,0 +1,7 @@
+Intraprocess-Communication:
+[INFO] [1741693518.402216456] [subscriber_node]: Average latency over the last 60 samples: 95.41 ms
+[INFO] [1741693578.338651057] [subscriber_node]: Average latency over the last 60 samples: 84.06 ms
+[INFO] [1741693638.294453395] [subscriber_node]: Average latency over the last 60 samples: 88.07 ms
+[INFO] [1741693698.277590130] [subscriber_node]: Average latency over the last 60 samples: 95.27 ms
+[INFO] [1741693758.254987107] [subscriber_node]: Average latency over the last 60 samples: 98.27 ms
+[INFO] [1741693818.215077593] [subscriber_node]: Average latency over the last 60 samples: 103.59 ms

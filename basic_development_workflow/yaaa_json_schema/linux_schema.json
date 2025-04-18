@@ -1,0 +1,66 @@
+{
+    "title": "LinuxFile",
+    "description": "File containing details of the Linux Setup",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cgroups": {
+            "title": "Cgroups",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Cgroup"
+            }
+        },
+        "version": {
+            "title": "Version",
+            "type": "string"
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "cgroups",
+        "version"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Cgroup": {
+            "title": "Cgroup",
+            "description": "Cgroup Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "cpu_max_percentage": {
+                    "title": "Cpu Max Percentage",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "name",
+                "cpu_max_percentage"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

@@ -1,0 +1,34 @@
+yaaa_version: 0.5
+
+imports:
+  - Subtractor.runnable
+  - Message.interfaces
+
+stimulus:
+  kind: data
+  timeout_ms: 20
+  trigger:
+    - input
+
+input_ports:
+  - name: input
+    type: Message
+
+output_ports:
+  - name: output
+    type: Message
+
+runnable_instances:
+  - name: subtractor
+    type: Subtractor
+
+connections:
+  inputs:
+    - from: input
+      to: subtractor.input
+
+  graph: []
+
+  outputs:
+    - from: subtractor.output
+      to: output

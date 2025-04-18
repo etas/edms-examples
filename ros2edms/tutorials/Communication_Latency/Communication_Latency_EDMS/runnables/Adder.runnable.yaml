@@ -1,0 +1,14 @@
+yaaa_version: 0.5
+
+imports:
+  - Message.interfaces
+
+input_ports:
+  - name: input
+    type: Message
+    policy: last
+    cache_size: 9
+
+output_ports:
+  - name: output
+    type: Message

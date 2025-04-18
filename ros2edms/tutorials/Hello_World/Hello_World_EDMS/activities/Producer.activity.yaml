@@ -1,0 +1,29 @@
+yaaa_version: 0.5
+
+imports:
+  - Producer.runnable
+  - Message.interfaces
+
+stimulus:
+  kind: cyclic
+  cycle_ms: 1000
+  offset_ms: 0
+
+input_ports: []
+
+output_ports:
+  - name: output
+    type: Message
+
+runnable_instances:
+  - name: producer
+    type: Producer
+
+connections:
+  inputs: []
+
+  graph: []
+
+  outputs:
+    - from: producer.output
+      to: output

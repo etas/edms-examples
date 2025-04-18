@@ -1,0 +1,151 @@
+{
+    "title": "SocFile",
+    "description": "File providing the representation of a System On Chip.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cpus": {
+            "title": "Cpus",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Cpu"
+            }
+        },
+        "memory": {
+            "$ref": "#/definitions/Memory"
+        },
+        "ports": {
+            "title": "Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Port"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "cpus",
+        "memory",
+        "ports"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Runs": {
+            "title": "Runs",
+            "description": "Runs Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "Cpu": {
+            "title": "Cpu",
+            "description": "CPU Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "cores": {
+                    "title": "Cores",
+                    "type": "integer"
+                },
+                "frequency": {
+                    "title": "Frequency",
+                    "type": "string"
+                },
+                "runs": {
+                    "$ref": "#/definitions/Runs"
+                }
+            },
+            "required": [
+                "name",
+                "cores",
+                "frequency",
+                "runs"
+            ],
+            "additionalProperties": false
+        },
+        "Memory": {
+            "title": "Memory",
+            "description": "Memory Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "size": {
+                    "title": "Size",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "size"
+            ],
+            "additionalProperties": false
+        },
+        "Port": {
+            "title": "Port",
+            "description": "Convenience type for a Port",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "config": {
+                    "title": "Config",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "config"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

@@ -1,0 +1,33 @@
+yaaa_version: 0.5
+
+imports:
+  - Adder.activity
+  - Consumer.activity
+  - Multiplier.activity
+  - Producer.activity
+  - Subtractor.activity
+
+activity_instances:
+  - name: producer
+    type: Producer
+    connections: []
+  - name: adder
+    type: Adder
+    connections:
+      - from: producer.output
+        to: input
+  - name: multiplier
+    type: Multiplier
+    connections:
+      - from: adder.output
+        to: input
+  - name: subtractor
+    type: Subtractor
+    connections:
+      - from: multiplier.output
+        to: input
+  - name: consumer
+    type: Consumer
+    connections:
+      - from: subtractor.output
+        to: input

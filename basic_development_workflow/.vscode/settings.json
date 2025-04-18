@@ -1,0 +1,26 @@
+{
+    "cmake.configureOnOpen": false,
+    "yaml.schemas": {
+        "./yaaa_json_schema/runnable_schema.json" : "*.runnable.yaml",
+        "./yaaa_json_schema/interface_group_schema.json":"*.interface_group.yaml",
+        "./yaaa_json_schema/interfaces_schema.json": "*.interfaces.yaml",
+        "./yaaa_json_schema/activity_schema.json": "*.activity.yaml",
+        "./yaaa_json_schema/in_gateway_schema.json": "*.in_gateway.yaml",
+        "./yaaa_json_schema/out_gateway_schema.json": "*.out_gateway.yaml",
+        "./yaaa_json_schema/gateway_schema.json": "*.gateway.yaml",
+        "./yaaa_json_schema/carma_0_22_deploy_schema.json": "*.carma_0_22_deploy.yaml",
+        "./yaaa_json_schema/ee_system_schema.json":"*.ee_system.yaml",
+        "./yaaa_json_schema/ee_interfaces_schema.json":"*.ee_interfaces.yaml",
+        "./yaaa_json_schema/ecu_schema.json": "*.ecu.yaml",
+        "./yaaa_json_schema/soc_schema.json": "*.soc.yaml",
+        "./yaaa_json_schema/switch_schema.json": "*.switch.yaml",
+        "./yaaa_json_schema/hypervisor_schema.json":"*.hypervisor.yaml",
+        "./yaaa_json_schema/activity_graph_schema.json": "*.activity_graph.yaml",
+        "./yaaa_json_schema/qnx_schema.json": "*.qnx.yaml",
+        "./yaaa_json_schema/linux_schema.json": "*.linux.yaml",
+        "./yaaa_json_schema/event_chains_schema.json": "*.event_chains.yaml",
+        "./yaaa_json_schema/budgets_schema.json": "*.budgets.yaml",
+        "./yaaa_json_schema/parameter_interface.json": "*.parameter_interface.yaml",
+        "./yaaa_json_schema/parameter_instance.json": "*.parameter_instance.yaml"
+    }
+}   

@@ -1,0 +1,21 @@
+yaaa_version: 0.5
+
+imports:
+  - ProducerConsumer.activity_graph
+
+deployment_targets:
+  - name: mw_1
+    type: noviroc
+    os_type: LINUX
+
+deployed_instances:
+  - activity_instance: consumer
+    deploy_to: mw_1
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: producer
+    deploy_to: mw_1
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10

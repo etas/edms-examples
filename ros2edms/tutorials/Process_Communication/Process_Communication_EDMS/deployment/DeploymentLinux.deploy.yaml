@@ -1,0 +1,45 @@
+yaaa_version: 0.5
+
+imports:
+  - Interprocess.activity_graph
+  - Intraprocess.activity_graph
+
+deployment_targets:
+  - name: mw_1_separate
+    type: noviroc
+    os_type: LINUX
+  - name: mw_1_combined
+    type: noviroc
+    os_type: LINUX
+
+deployed_instances:
+  - activity_instance: adder
+    deploy_to: mw_1_separate
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: consumer
+    deploy_to: mw_1_separate
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: multiplier
+    deploy_to: mw_1_separate
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: producer
+    deploy_to: mw_1_separate
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: subtractor
+    deploy_to: mw_1_separate
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10
+  - activity_instance: intraprocess
+    deploy_to: mw_1_combined
+    thread_pool_size: 1
+    core_affinity: [0]
+    importance: 10

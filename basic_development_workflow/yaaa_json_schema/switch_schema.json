@@ -1,0 +1,214 @@
+{
+    "title": "SwitchFile",
+    "description": "File containing information about Switch",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ports": {
+            "title": "Ports",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Port"
+            }
+        },
+        "characteristics": {
+            "$ref": "#/definitions/Characteristics"
+        },
+        "power": {
+            "$ref": "#/definitions/Power"
+        },
+        "voltage": {
+            "title": "Voltage",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Voltage"
+            }
+        },
+        "current": {
+            "$ref": "#/definitions/Current"
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "ports",
+        "characteristics",
+        "power",
+        "voltage",
+        "current"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Port": {
+            "title": "Port",
+            "description": "Convenience type for a Port",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "config": {
+                    "title": "Config",
+                    "pattern": "^[A-Z0-9]+[a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "config"
+            ],
+            "additionalProperties": false
+        },
+        "Characteristics": {
+            "title": "Characteristics",
+            "description": "Characteristics Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "phy_rx_delay_us": {
+                    "title": "Phy Rx Delay Us",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "phy_tx_delay_us": {
+                    "title": "Phy Tx Delay Us",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "switching_delay_min_us": {
+                    "title": "Switching Delay Min Us",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "switching_delay_max_us": {
+                    "title": "Switching Delay Max Us",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "switching_tx_delay_min_us": {
+                    "title": "Switching Tx Delay Min Us",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "switching_tx_delay_max_us": {
+                    "title": "Switching Tx Delay Max Us",
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "phy_rx_delay_us",
+                "phy_tx_delay_us",
+                "switching_delay_min_us",
+                "switching_delay_max_us",
+                "switching_tx_delay_min_us",
+                "switching_tx_delay_max_us"
+            ],
+            "additionalProperties": false
+        },
+        "Power": {
+            "title": "Power",
+            "description": "Convenience type for Power",
+            "type": "object",
+            "properties": {
+                "p_max_W": {
+                    "title": "P Max W",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "p_mean_W": {
+                    "title": "P Mean W",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "p_max_W",
+                "p_mean_W"
+            ],
+            "additionalProperties": false
+        },
+        "Voltage": {
+            "title": "Voltage",
+            "description": "Convenience type for Voltage",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "title": "Label",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string"
+                },
+                "v_min_V": {
+                    "title": "V Min V",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "v_max_V": {
+                    "title": "V Max V",
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "label",
+                "description",
+                "v_min_V",
+                "v_max_V"
+            ],
+            "additionalProperties": false
+        },
+        "Current": {
+            "title": "Current",
+            "description": "Convenience type for Current",
+            "type": "object",
+            "properties": {
+                "i_max_mA": {
+                    "title": "I Max Ma",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "i_quiescent_mA": {
+                    "title": "I Quiescent Ma",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "i_inrush_A": {
+                    "title": "I Inrush A",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "i_max_mA",
+                "i_quiescent_mA",
+                "i_inrush_A"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

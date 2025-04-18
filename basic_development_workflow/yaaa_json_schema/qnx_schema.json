@@ -1,0 +1,74 @@
+{
+    "title": "QnxFile",
+    "description": "Details of the QNX setup.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "adaptive_partitions": {
+            "title": "Adaptive Partitions",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/AdaptivePartition"
+            }
+        },
+        "version": {
+            "title": "Version",
+            "type": "string"
+        },
+        "references": {
+            "title": "References",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "adaptive_partitions",
+        "version",
+        "references"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "AdaptivePartition": {
+            "title": "AdaptivePartition",
+            "description": "Adaptive Partition Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "cpu_min_percentage": {
+                    "title": "Cpu Min Percentage",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "name",
+                "cpu_min_percentage"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

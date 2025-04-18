@@ -1,0 +1,6 @@
+yaaa_version: 0.5
+
+interfaces:
+  - type_name: Message
+    cpp_type: processchain::Message
+    cpp_include: interfaces/message.hpp

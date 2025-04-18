@@ -1,0 +1,54 @@
+{
+    "title": "EeInterfacesFile",
+    "description": "The file containing details of the Ee Interfaces",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ee_interfaces": {
+            "title": "Ee Interfaces",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/EeInterface"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "ee_interfaces"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "EeInterface": {
+            "title": "EeInterface",
+            "description": "EeInterface Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "type_name": {
+                    "title": "Type Name",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type_name"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

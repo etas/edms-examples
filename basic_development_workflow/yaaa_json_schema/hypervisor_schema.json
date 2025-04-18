@@ -1,0 +1,83 @@
+{
+    "title": "HypervisorFile",
+    "description": "File containing details of the Hypervisor setup",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "references": {
+            "title": "References",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "guests": {
+            "title": "Guests",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Guest"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "references",
+        "guests"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "Guest": {
+            "title": "Guest",
+            "description": "Guest Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "cores": {
+                    "title": "Cores",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "cores"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

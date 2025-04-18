@@ -1,0 +1,34 @@
+yaaa_version: 0.5
+
+imports:
+  - Adder.runnable
+  - Message.interfaces
+
+stimulus:
+  kind: data
+  timeout_ms: 20
+  trigger:
+    - input
+
+input_ports:
+  - name: input
+    type: Message
+
+output_ports:
+  - name: output
+    type: Message
+
+runnable_instances:
+  - name: adder
+    type: Adder
+
+connections:
+  inputs:
+    - from: input
+      to: adder.input
+
+  graph: []
+
+  outputs:
+    - from: adder.output
+      to: output

@@ -1,0 +1,30 @@
+yaaa_version: 0.5
+
+imports:
+  - Consumer.runnable
+  - ExampleInterfaces.interfaces
+
+stimulus:
+  kind: data
+  timeout_ms: 20
+  trigger:
+    - input
+
+input_ports:
+  - name: input
+    type: Message
+
+output_ports: []
+
+runnable_instances:
+  - name: consumer
+    type: Consumer
+
+connections:
+  inputs:
+    - from: input
+      to: consumer.input
+
+  graph: []
+
+  outputs: []

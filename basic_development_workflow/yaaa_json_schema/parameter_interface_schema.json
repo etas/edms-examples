@@ -1,0 +1,184 @@
+{
+    "title": "ParameterInterfaceFile",
+    "description": "File containing details of the Parameter Interface.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cpp_type": {
+            "title": "Cpp Type",
+            "type": "string"
+        },
+        "parameters": {
+            "title": "Parameters",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ParameterInterface"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "cpp_type",
+        "parameters"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "ParameterInterfaceValue": {
+            "title": "ParameterInterfaceValue",
+            "description": "Parameter Interface Value Object Model\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string"
+                },
+                "value": {
+                    "title": "Value",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "name",
+                "description"
+            ],
+            "additionalProperties": false
+        },
+        "ParameterInterface": {
+            "title": "ParameterInterface",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+                    "type": "string"
+                },
+                "data_type": {
+                    "title": "Data Type",
+                    "pattern": "^((u?int(8|16|32|64)_t|float|double)(\\[\\d*[1-9]\\d*\\]){0,3}|bool|enum|bitfield_enum|str\\[\\d*[1-9]\\d*\\])$",
+                    "examples": [
+                        "int8_t",
+                        "int16_t",
+                        "int32_t",
+                        "int64_t",
+                        "uint8_t",
+                        "uint16_t",
+                        "uint32_t",
+                        "uint64_t",
+                        "float",
+                        "double",
+                        "enum",
+                        "bitfield_enum",
+                        "str[N]"
+                    ],
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string"
+                },
+                "si-unit": {
+                    "title": "Si-Unit",
+                    "type": "string"
+                },
+                "min": {
+                    "title": "Min",
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "max": {
+                    "title": "Max",
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "default": {
+                    "title": "Default",
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "values": {
+                    "title": "Values",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ParameterInterfaceValue"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "data_type",
+                "description"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

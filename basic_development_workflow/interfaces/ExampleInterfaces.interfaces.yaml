@@ -1,0 +1,6 @@
+yaaa_version: 0.5
+
+interfaces:
+  - type_name: Message
+    cpp_type: consumer_producer_example::Message
+    cpp_include: example_interfaces/message.hpp

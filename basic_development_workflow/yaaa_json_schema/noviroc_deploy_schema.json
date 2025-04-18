@@ -1,0 +1,132 @@
+{
+    "title": "NovirocDeployFile",
+    "description": "File Model representation for Noviroc Deploy",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "activity_deployment": {
+            "title": "Activity Deployment",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/NovirocActivityDeployment"
+            }
+        },
+        "gateway_deployment": {
+            "title": "Gateway Deployment",
+            "default": [],
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/NovirocGatewayDeployment"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "NovirocActivityDeployment": {
+            "title": "NovirocActivityDeployment",
+            "description": "Object Model for Noviroc Activity Deployment\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "activity_instance": {
+                    "title": "Activity Instance",
+                    "type": "string"
+                },
+                "thread_pool_size": {
+                    "title": "Thread Pool Size",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "activity_instance",
+                "thread_pool_size",
+                "importance",
+                "core_affinity"
+            ],
+            "additionalProperties": false
+        },
+        "NovirocGatewayDeployment": {
+            "title": "NovirocGatewayDeployment",
+            "description": "Object Model for Noviroc Gateway Deployment.\n\n:param BaseModel: Basemodel object.\n:type BaseModel: Basemodel object.",
+            "type": "object",
+            "properties": {
+                "gateway_instance": {
+                    "title": "Gateway Instance",
+                    "type": "string"
+                },
+                "core_affinity": {
+                    "title": "Core Affinity",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    ]
+                },
+                "importance": {
+                    "title": "Importance",
+                    "minimum": 0,
+                    "maximum": 255,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "gateway_instance",
+                "core_affinity",
+                "importance"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

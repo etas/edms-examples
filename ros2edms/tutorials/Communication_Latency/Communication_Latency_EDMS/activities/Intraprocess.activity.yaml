@@ -1,0 +1,45 @@
+yaaa_version: 0.5
+
+imports:
+  - Producer.runnable
+  - Adder.runnable
+  - Multiplier.runnable
+  - Subtractor.runnable
+  - Consumer.runnable
+  - Message.interfaces
+
+stimulus:
+  kind: cyclic
+  cycle_ms: 10
+  offset_ms: 0
+
+input_ports: []
+
+output_ports: []
+
+runnable_instances:
+  - name: producer
+    type: Producer
+  - name: adder
+    type: Adder
+  - name: multiplier
+    type: Multiplier
+  - name: subtractor
+    type: Subtractor
+  - name: consumer
+    type: Consumer
+
+connections:
+  inputs: []
+
+  graph:
+    - from: producer.output
+      to: adder.input
+    - from: adder.output
+      to: multiplier.input
+    - from: multiplier.output
+      to: subtractor.input
+    - from: subtractor.output
+      to: consumer.input
+
+  outputs: []

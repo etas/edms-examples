@@ -1,0 +1,208 @@
+{
+    "title": "ActivityGraphFile",
+    "description": "Object Template for ActivityGraphFile based on the YaaaType.",
+    "type": "object",
+    "properties": {
+        "yaaa_version": {
+            "title": "Yaaa Version",
+            "type": "string"
+        },
+        "description": {
+            "title": "Description",
+            "default": "<< Description missing >>",
+            "type": "string"
+        },
+        "imports": {
+            "title": "Imports",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "sub_graphs": {
+            "title": "Sub Graphs",
+            "default": [],
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "activity_instances": {
+            "title": "Activity Instances",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ActivityInstance"
+            }
+        },
+        "gateway_instances": {
+            "title": "Gateway Instances",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/GatewayInstance"
+            }
+        }
+    },
+    "required": [
+        "yaaa_version",
+        "activity_instances"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "ActivityConnection": {
+            "title": "ActivityConnection",
+            "description": "Object Template for ActivityConnection based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "ActivityParameterInstanceMap": {
+            "title": "ActivityParameterInstanceMap",
+            "description": "Object Template for ActivityParameterInstanceMap based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "instance": {
+                    "title": "Instance",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "instance",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "ActivityInstance": {
+            "title": "ActivityInstance",
+            "description": "Object Template for ActivityInstance based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "maxLength": 100,
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "pattern": "^(<[A-Z0-9]+[a-zA-Z0-9, ]*>)?[A-Z0-9]+[<>, a-zA-Z0-9]*$",
+                    "type": "string"
+                },
+                "connections": {
+                    "title": "Connections",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivityConnection"
+                    }
+                },
+                "parameters": {
+                    "title": "Parameters",
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivityParameterInstanceMap"
+                    }
+                },
+                "tags": {
+                    "title": "Tags",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "connections"
+            ],
+            "additionalProperties": false
+        },
+        "GatewayConnection": {
+            "title": "GatewayConnection",
+            "description": "Object Template for GatewayConnection based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "from": {
+                    "title": "From",
+                    "type": "string"
+                },
+                "to": {
+                    "title": "To",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "from",
+                "to"
+            ],
+            "additionalProperties": false
+        },
+        "GatewayInstance": {
+            "title": "GatewayInstance",
+            "description": "Object Template for GatewayInstance based on the BaseModel.\n\n:param BaseModel: Using the BaseModel Object\n:type BaseModel: Dictionary of parameters",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "title": "Name",
+                    "pattern": "^[<>a-z0-9, ]?[a-z0-9][_<>a-z0-9]*",
+                    "type": "string"
+                },
+                "type": {
+                    "title": "Type",
+                    "type": "string"
+                },
+                "connections": {
+                    "title": "Connections",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GatewayConnection"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "connections"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

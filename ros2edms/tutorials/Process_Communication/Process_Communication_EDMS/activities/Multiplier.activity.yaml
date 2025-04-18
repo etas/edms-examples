@@ -1,0 +1,34 @@
+yaaa_version: 0.5
+
+imports:
+  - Multiplier.runnable
+  - Message.interfaces
+
+stimulus:
+  kind: data
+  timeout_ms: 20
+  trigger:
+    - input
+
+input_ports:
+  - name: input
+    type: Message
+
+output_ports:
+  - name: output
+    type: Message
+
+runnable_instances:
+  - name: multiplier
+    type: Multiplier
+
+connections:
+  inputs:
+    - from: input
+      to: multiplier.input
+
+  graph: []
+
+  outputs:
+    - from: multiplier.output
+      to: output
