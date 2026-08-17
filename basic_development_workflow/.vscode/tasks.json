@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Resolve dol_player_rest_server path",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "source \"${workspaceFolder}/install/activate_run.sh\" && ln -sf \"$(command -v dol_player_rest_server)\" \"${workspaceFolder}/.vscode/.dol_player_rest_server\""
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

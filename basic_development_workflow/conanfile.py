@@ -9,7 +9,6 @@ from conans import CMake, ConanFile
 
 #for copying files from the install to the build folder
 import shutil
-from conans import ConanFile, tools
 
 class Example(ConanFile):
     name = "hello_world"
@@ -26,24 +25,18 @@ class Example(ConanFile):
     # aos version and channel for finding required aos packages
     # set environment variables AOS_VERSION or AOS_CHANNEL for overwriting them
     # e.g. export AOS_CHANNEL=dev
-    aos_version = os.getenv("AOS_VERSION","0.33.0")
-    aos_channel = os.getenv("AOS_CHANNEL","eap")
+    aos_version = os.getenv("AOS_VERSION","0.52.1")
+    aos_channel = os.getenv("AOS_CHANNEL","sdk")
 
     options = {
-        "ROS": ["ON", "OFF"],
-        "RECALL": ["ON", "OFF"],
-        "ROS_INITIALIZATION": ["ON", "OFF"],
         "CODE_GENERATOR": ["yaaac2"],
-        "MIDDLEWARE_TARGET": ["carma_0_22"],
-        "LOGGING_FRAMEWORK": ["console", "console_and_mta"],
+        "MIDDLEWARE_TARGET": ["carma_0_22", "recall", "noviroc"],
+        "LOGGING_FRAMEWORK": ["no_console", "console"],
     }
     default_options = {
-        "ROS": "OFF",
-        "RECALL": "ON",
-        "ROS_INITIALIZATION": "OFF",
         "CODE_GENERATOR": "yaaac2",
-        "MIDDLEWARE_TARGET": "carma_0_22",
-        "LOGGING_FRAMEWORK": "console_and_mta",
+        "MIDDLEWARE_TARGET": "noviroc",
+        "LOGGING_FRAMEWORK": "console",
     }
 
     def build_requirements(self):
@@ -69,6 +62,9 @@ class Example(ConanFile):
         for opt_name, opt_value in self.options.items():
             cmake.definitions[opt_name] = opt_value
         cmake.definitions["BUILD_WARNINGS_AS_ERRORS"] = True
+        # Only takes effect with AOS_COVERAGE=ON (e.g. EAP devcontainer); needed because the
+        # AOS adapter code uses exceptions and precompiled AOS libs require --coverage linking.
+        cmake.definitions["ENABLE_EXCEPTION_FOR_COVERAGE"] = "ON"
 
         # for the following CMake definitions it makes no sense to define them as
         # options, since e.g. a package built with or without ccache does not differ
@@ -87,9 +83,9 @@ class Example(ConanFile):
             build_lib_path = os.path.join(self.build_folder, "lib")
             build_bin_path = os.path.join(self.build_folder, "bin")
             if not os.path.exists(build_lib_path):
-                os.makedirs(build_lib_path)        
+                os.makedirs(build_lib_path)
             if not os.path.exists(build_bin_path):
-                os.makedirs(build_bin_path)        
+                os.makedirs(build_bin_path)
             for file_name in os.listdir(install_lib_path):
                 full_file_name = os.path.join(install_lib_path, file_name)
                 if os.path.isfile(full_file_name):
@@ -106,5 +102,4 @@ class Example(ConanFile):
         self.copy("*.so", dst="lib", root_package="aos_runtime_dev", keep_path=False)
         self.copy("*recompute_recall_player", dst="bin", root_package="aos_runtime_dev", keep_path=False)
         self.copy("bin/esme", dst="bin", root_package="aos_runtime_prod", keep_path=False)
-        self.copy("bin/mta_raw_output_gateway", dst="bin", root_package="aos_runtime_dev", keep_path=False) 
-        self.copy("bin/mta_ros1_output_gateway", dst="bin", root_package="aos_runtime_dev", keep_path=False)
+        self.copy("bin/mta_raw_output_gateway", dst="bin", root_package="aos_runtime_dev", keep_path=False)

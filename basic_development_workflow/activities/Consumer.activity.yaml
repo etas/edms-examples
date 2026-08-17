@@ -6,7 +6,7 @@ imports:
 
 stimulus:
   kind: data
-  timeout_ms: 20
+  timeout_ms: 300
   trigger:
     - input
 

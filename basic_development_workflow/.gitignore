@@ -1,7 +1,5 @@
 /build/
 /install/
-/robolyzer_workspace/
-/mem_report/
-.envrc
 *.bs
-*.bag
+*.idx
+/.vscode/.dol_player_rest_server

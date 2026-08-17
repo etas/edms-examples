@@ -2,20 +2,6 @@
 
 In this section, we will explore how an application is typically developed using the YAAA (Yaml As an Architecture) language and C++.
 
-<!--
-In this section, we will develop an application using the YAAA (Yaml As an Architecture) language and C++.
--->
-
-<!--
-### Overview
-
-- **YAAA**: Used for defining the architecture.
-- **C++**: Used for writing business logic within Runnables.
-- **Gateways**: Facilitate communication with the external environment.
-- **Interfaces**: Define communication between Runnables, Activities, and Gateways.
-- **Conan and CMake**: Used for build control (optional, other build environments can be used).
--->
-
 ### YAAA modeling elements and project structure
 
 YAAA provides a set of YAML-based templates for modeling the software architecture of ADAS / AD systems.
@@ -30,7 +16,35 @@ The modeling elements are:
 
 The modeling elements are each specified in separate YAML files. These are typically organized in a corresponding directory structure within a project. 
 
-![Project structure](../res_readme/project_structure.jpg)
+```
+basic_development_workflow/
+├── CMakeLists.txt
+├── conanfile.py
+├── interfaces/
+│   ├── CMakeLists.txt
+│   ├── ExampleInterfaces.interfaces.yaml        # interface definitions
+│   └── interfaces_include/
+│       └── example_interfaces/
+│           └── message.hpp                      # C++ struct for Message
+├── runnables/
+│   ├── CMakeLists.txt
+│   ├── Producer.runnable.yaml                   # ports and internal state
+│   ├── Consumer.runnable.yaml                   # ports and policy
+│   ├── runnables_include/
+│   │   └── example_runnables/
+│   │       └── internal_state.hpp               # InternalState struct
+│   └── src/
+│       ├── producer.cpp                         # onInit / onUpdate business logic
+│       └── consumer.cpp
+├── activities/
+│   ├── CMakeLists.txt
+│   ├── Producer.activity.yaml                   # stimulus, connections, runnable instances
+│   └── Consumer.activity.yaml
+└── deployment/
+    ├── CMakeLists.txt
+    ├── HelloWorld.activity_graph.yaml            # instantiates and connects activities
+    └── Deployment.deploy.yaml                   # maps to hardware + measurement config
+```
 
 Go through the directory structure and have a look at the different files in the above mentioned directories. 
 
@@ -40,10 +54,7 @@ The business logic is implemented in the in C++ in the Runnables which can be fo
 
 C++ code for the Producer
 
-![C++ code for the Producer](../res_readme/producer_runnable.png)
-
-<!--
-```cpp 
+```cpp
 #include "Producer.hpp"
 
 void Producer_onInit(const Producer_InStruct&, mwala::generic_io::State<Producer_State>&, Producer_RunContext&)
@@ -63,14 +74,10 @@ void Producer_onUpdate(const Producer_InStruct&,
     LOG_INFO("sending number: {}", out.m_output.get().number);
 }
 ```
--->
 
 C++ code for the Consumer
 
-![C++ code for the Consumer](../res_readme/consumer_runnable.png)
-
-<!--
-```cpp 
+```cpp
 #include "Consumer.hpp"
 
 void Consumer_onInit(const Consumer_InStruct&, mwala::generic_io::State<Consumer_State>&, Consumer_RunContext&)
@@ -91,53 +98,25 @@ void Consumer_onUpdate(const Consumer_InStruct& in,
         for (auto& x : in.m_input)
         {
             LOG_INFO("received number: {}", x.get().number);
+            if (x.get().number % 2 == 0)
+            {
+                LOG_INFO("number is even");
+            }
+            else
+            {
+                LOG_INFO("number is odd");
+            }
         }
     }
 }
 ```
--->
 
 Each Runnable has two functions which are called by the middleware.
 
-- The `onInit()` function is called once upon initializatiuon.
+- The `onInit()` function is called once upon initialization.
 - The `onUpdate()` function is called whenever the runnable gets executed. It takes the values from the InStruct and the internal state and produces the values in the OutStruct.
 
 Note that the `onInit()` function is not implemented as no initialization is necessary in the simple example.
-
-<!--
-### Steps to Develop the Application
-
-1. **Set Up Your Development Environment**
-
-- Ensure you have Visual Studio Code installed.
-- Make sure the necessary VS Code extensions for AOS development are installed (refer to **[Visual Studio Code as IDE](docs/3-vscode.md)**).
-
-2. **Create a New AOS Project**
-
-- Use the `aos-yaaa-support` extension to create a preconfigured AOS project.
-- Open Visual Studio Code and navigate to the Command Palette (**Ctrl+Shift+P**).
-- Type `aos: create project` and follow the prompts to set up your project.
-
-3. **Write Business Logic**
-
-- Navigate to the `runnables/src` directory of your project.
-- Create or edit C++ files to implement the business logic within Runnables.
-
-4. **Define Architecture Using YAAA**
-
-- Open the YAAA files in the respective directories.
-- Inspect the Interfaces, Runnables, Activities and Deployment.
-
-```yaml # ExampleInterfaces.interfaces.yaml:
-yaaa_version: 0.5
-
-interfaces:
-  - type_name: Message
-    cpp_type: consumer_producer_example::Message
-    cpp_include: example_interfaces/message.hpp
-```
-
--->
 
 ### **Build configuration with Conan and CMake**
 
@@ -145,17 +124,50 @@ The build configuration for the project is done using Conan and CMake.
 
 In the `CMakeLists.txt` files of the sub-directories of the project, the YAAA modeling files and C++ files are added to the build system. Note that the SDK provides a set of macros - provided through YAAA CMake - to handle the contents more easily.
 
-![CMakeLists.txt](../res_readme/cmake_lists.png)
+```cmake
+cmake_minimum_required(VERSION 3.16)
+project(hello_world)
+
+find_package(aos_build_tools REQUIRED)
+find_package(aos_runtime_prod REQUIRED)
+find_package(aos_runtime_dev REQUIRED)
+
+include(yaaa_init)
+yaaa_init(
+  ROOT_FILE "deployment/Deployment.deploy.yaml"
+  YAAA_IMPORT_DIRS
+    deployment
+    activities
+    runnables
+    interfaces
+)
+
+add_subdirectory(interfaces)
+add_subdirectory(runnables)
+add_subdirectory(activities)
+add_subdirectory(deployment)
+```
 
 In the `conanfile.py`, project-wide settings for the actual build are defined.
 
-![conanfile.py](../res_readme/conanfile.png)
+```python
+options = {
+    "CODE_GENERATOR": ["yaaac2"],
+    "MIDDLEWARE_TARGET": ["carma_0_22", "recall", "noviroc"],
+    "LOGGING_FRAMEWORK": ["no_console", "console"],
+}
+default_options = {
+    "CODE_GENERATOR": "yaaac2",
+    "MIDDLEWARE_TARGET": "noviroc",
+    "LOGGING_FRAMEWORK": "console",
+}
+```
 
 ### Tips
 
 - When changing files, regularly save your work and commit changes to version control.
-- Use the YAAA-CO and YAAAVis extensions for better development experience.
+- Use the YAAAVis extension for better development experience.
 
 Let's proceed to the next section where we will build our project.
 
-Previous section: [Introduction](../readme.md) | Next section: [Build](4-build.md)
+Previous section: [Introduction](../readme.md) | Next section: [Build](03-build.md)

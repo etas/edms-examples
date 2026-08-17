@@ -6,15 +6,15 @@ This tutorial guides you as an individual developer through the entire developme
 
 The tutorial is split into multiple following sections that build on each other. Following the tutorial, you will achieve the following:
 
-- **[Develop](docs/2-develop.md)**: Understand the project structure in YAAA (Yaml As an Architecture) and business logic of the application (C++).
-- **[Build](docs/4-build.md)**: Compile the application using Conan and CMake.
-- **[Visualize](docs/5-visualize.md)**: View the generated architecture model visualization in your browser.
-- **[Run](docs/6-run.md)**: Execute the application using either a start script or ESME (Execution and State Manager).
-- **[Measure & Record](docs/7-record.md)**: Capture data from the running application and store it in a file.
-- **[Analyze](docs/8-analyze.md)**: Analyze the recorded data using <a href="https://edms.etas.com/explanations/robolyzer.html" target="_blank">Robolyzer</a>.
-- **[Recompute and Debug](docs/9-recompute.md)**: Replay recorded data with <a href="https://edms.etas.com/explanations/robolyzer.html" target="_blank">Robolyzer</a> and <a href="https://edms.etas.com/explanations/recall.html" target="_blank">Recall player</a>, and debug the business logic (C++ code) in Visual Studio Code.
+- **[Develop](docs/02-develop.md)**: Understand the project structure in YAAA (Yaml As an Architecture) and business logic of the application (C++).
+- **[Build](docs/03-build.md)**: Compile the application using Conan and CMake.
+- **[Visualize](docs/04-visualize.md)**: View the generated architecture model visualization in your browser.
+- **[Run](docs/05-run.md)**: Execute the application using either a start script or ESME (Execution and State Manager).
+- **[Record](docs/06-record.md)**: Capture data from the running application and store it in a file.
+- **[Recompute](docs/07-recompute.md)**: Replay the recorded data with the <a href="https://edms.etas.com/explanations/recall.html" target="_blank">Recall player</a>.
+- **[Debug](docs/08-debug.md)**: Step through the business logic (C++ code) in Visual Studio Code while it replays.
 
-By the end of this tutorial, you will have developed, built, visualized, run, measured & recorded, analyzed, recomputed and debugged your first application.
+By the end of this tutorial, you will have developed, built, visualized, run, recorded, recomputed and debugged your first application.
 Through this, you will have achieved a full roundtrip through the [AD Cycle](https://edms.etas.com/the-ad-cycle-how-it-works.html). 
 As part of this, you will also have gotten to know the main tools of the SDK.
 
@@ -34,4 +34,4 @@ The tutorial is using a simple "Hello World" example, consisting of a Producer a
 
 Let's get started!
 
-Next section: [Develop](docs/2-develop.md)
+Next section: [Develop](docs/02-develop.md)
