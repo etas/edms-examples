@@ -93,8 +93,6 @@ Output after conan build (default `MIDDLEWARE_TARGET=noviroc`):
 
 ```
 ...
-[WARNING ] ../../deployment/Deployment.deploy.yaml:27:17: MTA gateways will not be started by esme in this version of AOS. When manually starting the gateway for the configuration 'raw_gateway', please ensure that the same cycle period (200 ms) is used.
-...
 [ 92%] Built target Deployment_mw_1_dmc_mta_adapter
 [ 95%] Built target Producer_activity
 [100%] Built target Consumer_activity
@@ -102,9 +100,9 @@ Output after conan build (default `MIDDLEWARE_TARGET=noviroc`):
 [100%] Built target all_deploys
 ```
 
->The WARNING about the `raw_gateway` cycle period is expected and not an error — it is a reminder for the **[Record](06-record.md)** section, where the MTA RAW gateway is started manually and must use a matching cycle period.
+>The exact percentages and the order of the `Built target` lines vary between runs, since the targets are built in parallel.
 
-
+>Note that the MTA RAW gateway is **not** started by ESME — you start it manually in the **[Record](06-record.md)** section, where it must use the same cycle period (200 ms) as the `raw_gateway` measurement config in `deployment/Deployment.deploy.yaml`.
 
 Any errors encountered during this process will be displayed in the terminal. Make sure to resolve them before proceeding.
 

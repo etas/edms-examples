@@ -24,13 +24,15 @@ In this section, we will record data from the running application on the develop
     source ./install/activate_run.sh
     ```
 
-    Register the gateway as its own process within the middleware, then start recording. `ACTIVITY_INSTANCE_NAME` can be any name of your choosing; `PROCESS_ID` must follow the pattern `ProcessId_<ACTIVITY_INSTANCE_NAME>_Gateway`:
+    Register the gateway as its own process within the middleware, then start recording. `__AOS_ACTIVITY_INSTANCE_NAME` can be any name of your choosing; `__AOS_PROCESS_ID` must follow the pattern `ProcessId_<__AOS_ACTIVITY_INSTANCE_NAME>_Gateway`:
 
     ```bash
-    export ACTIVITY_INSTANCE_NAME=raw_gateway
-    export PROCESS_ID=ProcessId_raw_gateway_Gateway
+    export __AOS_ACTIVITY_INSTANCE_NAME=raw_gateway
+    export __AOS_PROCESS_ID=ProcessId_raw_gateway_Gateway
     mta_raw_output_gateway --enable-noviroc-manifest -f recording.bs
     ```
+
+    > For AOS 0.52.1, use `ACTIVITY_INSTANCE_NAME` and `PROCESS_ID` instead (without the `__AOS_` prefix).
 
     > `--enable-noviroc-manifest` tells the gateway to use the ESME noviroc manifest to discover the sender ports to record. `-f recording.bs` sets the output file.
 
@@ -39,8 +41,8 @@ In this section, we will record data from the running application on the develop
     ```
     Required library interface version: '1.0.0'
     Found shared library interface version: '1.0.0'
-    Required AOS base interface version: '1.1.0'
-    Found shared library AOS base interface version: '1.1.0'
+    Required AOS base interface version: '1.2.0'
+    Found shared library AOS base interface version: '1.2.0'
     mta_gateway_generic v0.1.0 commit: workspace
     Transport Library: mta_gateway_ostream v0.11.0 commit: workspace
     Logging setup done for level 

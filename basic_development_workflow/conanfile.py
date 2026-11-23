@@ -25,7 +25,7 @@ class Example(ConanFile):
     # aos version and channel for finding required aos packages
     # set environment variables AOS_VERSION or AOS_CHANNEL for overwriting them
     # e.g. export AOS_CHANNEL=dev
-    aos_version = os.getenv("AOS_VERSION","0.52.1")
+    aos_version = os.getenv("AOS_VERSION","0.58.0")
     aos_channel = os.getenv("AOS_CHANNEL","sdk")
 
     options = {

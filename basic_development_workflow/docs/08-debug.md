@@ -77,6 +77,14 @@ This section extends **[Recompute](07-recompute.md)**: instead of just replaying
 
 - `dol player open` must run before `dol player play`, otherwise playback fails with `open data source first`.
 - If **"Attach to Recall Player"** doesn't show up in the Run and Debug dropdown in step 5, the folder likely wasn't added to the workspace correctly — see **[Using this example alongside an existing workspace](vscode.md#using-this-example-alongside-an-existing-workspace)**.
+- **Attaching in step 5 asks "Superuser access is required to attach to a process ... [y/N]"?**
+  Linux blocks debuggers from attaching to processes they didn't start themselves, so VS Code asks to attach as superuser. Type `y` in the terminal that shows the question and debugging works as usual.
+
+    To avoid the question, run this once on your machine until the next reboot (if you use a Dev Container, run it on the host, not inside the container):
+
+    ```bash
+    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    ```
 
 Congratulations! You have successfully recomputed and debugged your business logic using the recall player and GDB in VS Code.
 

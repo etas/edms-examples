@@ -1,4 +1,4 @@
-yaaa_version: 0.5
+yaaa_version: 0.6
 
 imports:
   - HelloWorld.activity_graph
@@ -6,18 +6,21 @@ imports:
 deployment_targets:
   - name: mw_1
     type: noviroc
+    os_type: LINUX
+    os_config:
+      scheduling_config:
+        - __default__:
+            policy: SCHED_OTHER
+            priority: 0
+            core_affinity: [0]  # optional: restrict the processes to CPU core 0
 
 deployed_instances:
   - activity_instance: consumer
     deploy_to: mw_1
     thread_pool_size: 1
-    core_affinity: [0]
-    importance: 10
   - activity_instance: producer
     deploy_to: mw_1
     thread_pool_size: 1
-    core_affinity: [0]
-    importance: 10
 
 measurement_config:
   - name: raw_gateway
